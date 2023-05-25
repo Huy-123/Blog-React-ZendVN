@@ -17,7 +17,7 @@ export default function ArticleItemCategories({ categoryIds }) {
     (list, item) => ({ ...list, [item.id]: item }),
     {}
   );
-
+  
   return (
     categories.length === 0 ? <></> :
     <ul className="article-item__categories">

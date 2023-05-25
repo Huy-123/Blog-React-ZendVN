@@ -8,11 +8,11 @@ function HeaderSearch() {
   const history = useHistory()
   const [queryStr, setQueryStr] = useState('')
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   function handleOnChange(evt) {
     setQueryStr(evt.target.value)
-  }
+  } 
 
   function handleSubmit(evt) {
     evt.preventDefault()
@@ -25,7 +25,8 @@ function HeaderSearch() {
 
     history.push('/search?q=' + queryStrURI)
 
-    dispatch(actGetSearchPageAsync(queryStrURI))
+
+    // dispatch(actGetSearchPageAsync(queryStrURI))
   }
 
   return (

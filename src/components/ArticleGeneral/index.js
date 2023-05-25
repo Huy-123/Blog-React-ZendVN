@@ -3,11 +3,16 @@ import ArticleItem from "../ArticleItem";
 import Button from "../shared/Button";
 import MainTitle from "../shared/MainTitle";
 import { actGetListArticleGeneralAsync } from "../../store/post/actions";
+import { useState } from "react";
 
 function ArticleGeneral() {
-  const listArticleGeneral = useSelector(
+  const [loading, setLoading] = useState(false);
+
+  const data = useSelector(
     (state) => state.POST.listArticleGeneral.list
-  );
+  )
+
+  // setLoading(false)
 
   const currentPage = useSelector(
     (state) => state.POST.listArticleGeneral.currentPage
@@ -18,10 +23,12 @@ function ArticleGeneral() {
   const dispatch = useDispatch();
 
   const handleLoadMore = () => {
-    dispatch(actGetListArticleGeneralAsync(currentPage + 1));
+    setLoading(true)
+    dispatch(actGetListArticleGeneralAsync(currentPage + 1)).then(()=>{
+      setLoading(false)
+    });
   };
 
-  
 
   return (
     <div className="articles-list section">
@@ -31,7 +38,7 @@ function ArticleGeneral() {
         {/* End Main Title */}
         {/* End Row News List */}
         <div className="tcl-row">
-          {listArticleGeneral.map((item) => (
+          {data.map((item) => (
             <div key={item.id} className="tcl-col-12 tcl-col-md-6">
               <ArticleItem isStyleCard data={item} />
             </div>
@@ -43,7 +50,7 @@ function ArticleGeneral() {
             <Button
               type="primary"
               size="large"
-              loading={true}
+              loading={loading}
               onClick={handleLoadMore}
             >
               Tải thêm

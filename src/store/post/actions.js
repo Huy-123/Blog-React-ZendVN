@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+
 import postService from '../../services/postService';
 import { mappingPostData } from './../../helper/index';
 
@@ -46,14 +45,21 @@ export function actGetListArticleGeneral(posts, currentPage, totalPage) {
 	}
   }
 
-  export function actGetSearchPage(posts){
+  export function actGetSearchPage(posts, currentPage, totalPage){
 	return {
 		type: ACT_GET_LIST_SEARCH_PAGE,
 		payload: {
-			posts
-		}
+			posts,
+			currentPage,
+			totalPage
+		  },
 	}
   }
+
+  
+
+
+
 
 
 
@@ -90,15 +96,24 @@ export function actGetListArticleGeneralAsync(page = 1){
 export function actGetPostDetailBySlugAsync(slug){
 	return async (dispatch) => {
 		const response = await postService.getPostDetailBySlug(slug);
-		 const posts = response.data.map(mappingPostData);
-		 dispatch(actGetPostDetailBySlug(posts))
+		const posts = response.data.map(mappingPostData);
+		 dispatch(actGetPostDetailBySlug(posts[0]))
 	}
 }
 
-export function actGetSearchPageAsync(queryStrURI){
+export function actGetSearchPageAsync(queryStrURI, page = 1){
 	return async (dispatch) => {
-		const response = await postService.getListSearchPage(queryStrURI);
+		const response = await postService.getListSearchPage(queryStrURI, page);
+		const totalPage = parseInt(response.headers['x-wp-totalpages']);
 		const posts = response.data.map(mappingPostData);
-		dispatch(actGetSearchPage(posts))
+		dispatch(actGetSearchPage(posts, page, totalPage))
+	}
+}
+
+export function actGetListRelatedPostByAuthorAsync(authorId){
+	return async (dispatch) => {
+		const response = await postService.getListRelatedPost(authorId);
+		const data = response.data
+
 	}
 }

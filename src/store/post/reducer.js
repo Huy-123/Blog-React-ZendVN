@@ -15,7 +15,11 @@ const initState = {
     totalPage: 0
   },
   listPostDetailBySlug: [],
-  listSearchPage: []
+  listSearchPage: {
+    list: [],
+    currentPage: 1,
+    totalPage: 1
+  }
 };
 
 function reducer(state = initState, action) {
@@ -42,12 +46,16 @@ function reducer(state = initState, action) {
     case ACT_GET_POST_DETAIL_BY_SLUG:
       return {
         ...state,
-        listPostDetailBySlug: action.payload.posts,
+        listPostDetailBySlug: [action.payload.posts],
       };
     case ACT_GET_LIST_SEARCH_PAGE:
       return {
         ...state,
-        listSearchPage: action.payload.posts
+        listSearchPage: {...state.listSearchPage,
+          currentPage: action.payload.currentPage,
+          totalPage: action.payload.totalPage,
+          list: action.payload.currentPage === 1 ? action.payload.posts : [...state.listSearchPage.list, ...action.payload.posts]
+        }
       }
     default:
       return state;

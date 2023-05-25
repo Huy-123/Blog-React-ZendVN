@@ -1,3 +1,8 @@
+
+export function getQueryStr(name, searchLocation) {
+  return new URLSearchParams(searchLocation).get(name)
+}
+
 export const mappingPostData = (item) => {
   return {
     id: item.id,
@@ -8,7 +13,8 @@ export const mappingPostData = (item) => {
     authorData: item.author_data.nickname,
     content: item.content.rendered,
     categoryIds: item.categories,
-    des: item.excerpt.rendered
+    des: item.excerpt.rendered,
+    authorId: item.author
   };
 };
 

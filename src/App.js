@@ -12,11 +12,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { actFetchAllMenusAsync } from "./store/menu/actions";
 import { actFetchAllCategoriesAsync } from "./store/category/actions";
+import { actFetchMeAsync } from "./store/user/actions";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(actFetchMeAsync())
     dispatch(actFetchAllMenusAsync());
     dispatch(actFetchAllCategoriesAsync())
   }, [dispatch]);

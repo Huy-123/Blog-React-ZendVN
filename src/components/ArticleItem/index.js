@@ -20,6 +20,7 @@ export default function ArticleItem({
   if (!data) return <></>;
 
   let { img, title, slug, date, authorData, categoryIds, des} = data;
+
   const classes = cls("article-item", {
     "style-card": isStyleCard,
     "style-row": isStyleRow,

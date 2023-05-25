@@ -17,7 +17,7 @@ import API from "./api";
 
 const postService = {
 	getAll: function (inputParams = {}){
-		return API.get('/wp/v2/posts', {
+		return API.call().get('/wp/v2/posts', {
 			params: {
 				lang: 'vi',
 				...inputParams,
@@ -43,9 +43,12 @@ const postService = {
 		// 	}
 		// })
 	},
-	getListSearchPage: function(queryStrURI){
-		return this.getAll({per_page: 3, page: 1, search: queryStrURI})
-	}
+	getListSearchPage: function(queryStrURI, page = 1){
+		return this.getAll({per_page: 1, page: page, search: queryStrURI})
+	},
+	getListRelatedPost: function(authorId){
+		return this.getAll({per_page: 3, page: 1, author: authorId})
+	},
 
 }
 

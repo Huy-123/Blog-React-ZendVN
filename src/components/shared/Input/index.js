@@ -8,8 +8,12 @@ function Input({
   type = 'text',
   className,
   icon = <IconSearch />,
+  name,
+  handleChangeValue,
   ...restProps
 }) {
+
+
   const [localType, setLocalType] = useState(type)
 
   function handleToggleShowPwd() {
@@ -45,7 +49,7 @@ function Input({
       { type === 'password' && (
         <i className={classesIconPwd} onClick={handleToggleShowPwd}></i>
       ) }
-      <input type={localType} className={className} {...restProps} />
+      <input onChange={handleChangeValue} name={name} type={localType} className={className} {...restProps} />
     </div>
   )
 }

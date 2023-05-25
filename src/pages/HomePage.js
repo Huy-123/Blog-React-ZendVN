@@ -26,7 +26,6 @@ function HomePage() {
   useEffect(() => {
     dispatch(actGetListArticleLatestAsync());
     dispatch(actGetListArticlePopularAsync());
-
     // dispatch(actGetListArticleGeneralAsync(perPage)).then((res) => {
     //   const keys = Object.values(res.headers);
     //   const totalPage = keys[1]

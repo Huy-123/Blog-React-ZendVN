@@ -3,7 +3,7 @@ import PostDetailContent from "../components/PostDetail/PostDetailContent";
 import PostDetailHead from "../components/PostDetail/PostDetailHead";
 import PostDetailSidebar from "../components/PostDetail/PostDetailSidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { actGetPostDetailBySlugAsync } from "../store/post/actions";
+import { actGetListRelatedPostByAuthorAsync, actGetPostDetailBySlugAsync } from "../store/post/actions";
 import { useEffect, useState } from "react";
 import Loading from "./../components/Loading/index";
 
@@ -12,13 +12,23 @@ function PostDetailPage() {
   const slug = params.slug;
   const dispatch = useDispatch();
   const [waitLoading, setWaitLoading] = useState(false);
+
+  let data = useSelector((state) => state.POST.listPostDetailBySlug)[0];
+
+  console.log('data1:', data); 
+
   useEffect(() => {
+    console.log('data2: ', data);
+    console.log('test');
     dispatch(actGetPostDetailBySlugAsync(slug)).then(() => {
       setWaitLoading(true);
     });
+    if(data){
+      dispatch(actGetListRelatedPostByAuthorAsync(data.authorId))
+    }
   }, []);
-  let data = useSelector((state) => state.POST.listPostDetailBySlug);
-  data = data[0];
+
+
   if (waitLoading === false) {
     return (
       <div className="loading">
@@ -26,6 +36,7 @@ function PostDetailPage() {
       </div>
     );
   }
+
   return (
     <main className="post-detail">
       <div className="spacing" />
