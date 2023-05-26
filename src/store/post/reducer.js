@@ -3,7 +3,8 @@ import {
   ACT_GET_LIST_ARTICLE_LASTEST,
   ACT_GET_LIST_ARTICLE_POPULAR,
   ACT_GET_POST_DETAIL_BY_SLUG,
-  ACT_GET_LIST_SEARCH_PAGE
+  ACT_GET_LIST_SEARCH_PAGE,
+  ACT_FETCH_ARTICLES_PAGING
 } from "./actions";
 
 const initState = {
@@ -16,6 +17,12 @@ const initState = {
   },
   listPostDetailBySlug: [],
   listSearchPage: {
+    list: [],
+    currentPage: 1,
+    totalPage: 1
+  },
+  // Custom Hook
+  listPostsPaging: {
     list: [],
     currentPage: 1,
     totalPage: 1
@@ -57,6 +64,15 @@ function reducer(state = initState, action) {
           list: action.payload.currentPage === 1 ? action.payload.posts : [...state.listSearchPage.list, ...action.payload.posts]
         }
       }
+      case ACT_FETCH_ARTICLES_PAGING:
+        return {
+          ...state,
+          listPostsPaging: {...state.listPostsPaging,
+            currentPage: action.payload.currentPage,
+            totalPage: action.payload.totalPage,
+            list: action.payload.currentPage === 1 ? action.payload.posts : [...state.listPostsPaging.list, ...action.payload.posts]
+          },
+        };
     default:
       return state;
   }

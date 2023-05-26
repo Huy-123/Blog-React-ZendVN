@@ -1,8 +1,6 @@
 import Input from '../shared/Input'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom'
-import { actGetSearchPageAsync } from '../../store/post/actions';
 
 function HeaderSearch() {
   const history = useHistory()

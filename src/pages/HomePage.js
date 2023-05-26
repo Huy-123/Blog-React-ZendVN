@@ -4,6 +4,7 @@ import ArticleLatest from "../components/ArticleLatest";
 import ArticlePopular from "../components/ArticlePopular";
 import { useEffect, useState } from "react";
 import {
+  actFetchArticlesPagingAsync,
   actGetListArticleGeneralAsync,
   actGetListArticleLatestAsync,
   actGetListArticlePopularAsync,
@@ -35,7 +36,8 @@ function HomePage() {
     //   }
     // });
     
-    dispatch(actGetListArticleGeneralAsync())
+    // dispatch(actGetListArticleGeneralAsync())
+    dispatch(actFetchArticlesPagingAsync())
     setshowLoading(false);
   }, []);
   return showLoading === true ? (

@@ -4,30 +4,34 @@ import Button from "../shared/Button";
 import MainTitle from "../shared/MainTitle";
 import { actGetListArticleGeneralAsync } from "../../store/post/actions";
 import { useState } from "react";
+import { usePostsPaging } from "../../hooks/usePostsPaging";
 
 function ArticleGeneral() {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  const data = useSelector(
-    (state) => state.POST.listArticleGeneral.list
-  )
+  // const data = useSelector(
+  //   (state) => state.POST.listArticleGeneral.list
+  // )
 
   // setLoading(false)
 
-  const currentPage = useSelector(
-    (state) => state.POST.listArticleGeneral.currentPage
-  );
-  const totalPage = useSelector(
-    (state) => state.POST.listArticleGeneral.totalPage
-  );
-  const dispatch = useDispatch();
+  // const currentPage = useSelector(
+  //   (state) => state.POST.listArticleGeneral.currentPage
+  // );
+  // const totalPage = useSelector(
+  //   (state) => state.POST.listArticleGeneral.totalPage
+  // );
 
-  const handleLoadMore = () => {
-    setLoading(true)
-    dispatch(actGetListArticleGeneralAsync(currentPage + 1)).then(()=>{
-      setLoading(false)
-    });
-  };
+  const {posts,renderButtonLoadMore} = usePostsPaging()
+
+  // const dispatch = useDispatch();
+
+  // const handleLoadMore = () => {
+  //   setLoading(true)
+  //   dispatch(actGetListArticleGeneralAsync(currentPage + 1)).then(()=>{
+  //     setLoading(false)
+  //   });
+  // };
 
 
   return (
@@ -38,7 +42,7 @@ function ArticleGeneral() {
         {/* End Main Title */}
         {/* End Row News List */}
         <div className="tcl-row">
-          {data.map((item) => (
+          {posts.map((item) => (
             <div key={item.id} className="tcl-col-12 tcl-col-md-6">
               <ArticleItem isStyleCard data={item} />
             </div>
@@ -46,7 +50,7 @@ function ArticleGeneral() {
         </div>
         {/* End Row News List */}
         <div className="text-center">
-          {currentPage < totalPage && (
+          {/* {currentPage < totalPage && (
             <Button
               type="primary"
               size="large"
@@ -55,7 +59,9 @@ function ArticleGeneral() {
             >
               Tải thêm
             </Button>
-          )}
+          )} */}
+
+          {renderButtonLoadMore()}
         </div>
       </div>
     </div>

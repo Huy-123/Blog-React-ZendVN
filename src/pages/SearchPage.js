@@ -5,10 +5,13 @@ import { getQueryStr } from "../helper";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { actGetSearchPageAsync } from "../store/post/actions";
-import Loading from "../components/Loading";
+// import { usePostsPaging } from './../hooks/usePostsPaging';
 
-import FuzzyHighlighter, { Highlighter } from 'react-fuzzy-highlighter';
+import { actFetchArticlesPagingAsync, actGetSearchPageAsync } from "../store/post/actions";
+import Loading from "../components/Loading";
+import { usePostsPaging } from "../hooks/usePostsPaging";
+
+// import FuzzyHighlighter, { Highlighter } from 'react-fuzzy-highlighter';
 
 function SearchPage() {
 
@@ -20,6 +23,8 @@ function SearchPage() {
 
   const queryStr = getQueryStr("q", location.search)
 
+  const inputParams = {search: queryStr}
+
   const dispatch = useDispatch()
 
   const currentPage = useSelector(
@@ -29,32 +34,44 @@ function SearchPage() {
     (state) => state.POST.listSearchPage.totalPage
   );
 
+  const {posts,renderButtonLoadMore} = usePostsPaging(inputParams)
+
+
+
   const handleLoadMore = () => {
     setLoading(true)
     dispatch(actGetSearchPageAsync(queryStr, (currentPage + 1))).then(()=>{
     setLoading(false)
     })
+    // dispatch(actFetchArticlesPagingAsync({ page: (currentPage + 1), inputParams})).then(()=>{
+    // setLoading(false)
+    // })
   };
 
-  const [waitLoading, setWaitLoading] = useState(false);
+  // const [waitLoading, setWaitLoading] = useState(false);
   // dùng qeuryStr làm dependensice
 
   // <ArticleItem isShowCategoies isShowDesc isShowAvatar isStyleCard data={listArticlePopular[0]}/>
 
   useEffect( ()=>{
-    setWaitLoading(true)
-    dispatch(actGetSearchPageAsync(queryStr)).then(()=>{
-      setWaitLoading(false)
+    // setWaitLoading(true)
+    // dispatch(actGetSearchPageAsync(queryStr)).then(()=>{
+    //   setWaitLoading(false)
+    //   })
+
+    // ============= Custom Hook
+    dispatch(actFetchArticlesPagingAsync( { inputParams })).then(()=>{
+      // setWaitLoading(false)
       })
   },[queryStr])
 
-  if (waitLoading === true) {
-    return (
-      <div className="loading">
-        <Loading/>
-      </div>
-    );
-  }
+  // if (waitLoading === true) {
+  //   return (
+  //     <div className="loading">
+  //       <Loading/>
+  //     </div>
+  //   );
+  // }
   return (
     <div className="articles-list section">
       <div className="tcl-container">
@@ -87,7 +104,7 @@ function SearchPage() {
             />
           </div>
 
-          {data.map((listSearch) => {
+          {posts.map((listSearch) => {
             return (
                 <div key={listSearch.id} className="tcl-col-12 tcl-col-md-8">
                   <ArticleItem
@@ -105,14 +122,15 @@ function SearchPage() {
         </div>
 
         <div className="text-center">
-          {(currentPage < totalPage) && <Button 
+          {/* {(currentPage < totalPage) && <Button 
             type="primary"
             size="large"
             loading={loading}
             onClick={handleLoadMore}          
           >
             Tải thêm
-          </Button>}
+          </Button>} */}
+          {renderButtonLoadMore()}
         </div>
       </div>
     </div>

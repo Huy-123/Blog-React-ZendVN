@@ -8,6 +8,8 @@ export const ACT_GET_LIST_ARTICLE_GENERAL = 'ACT_GET_LIST_ARTICLE_GENERAL';
 export const ACT_GET_POST_DETAIL_BY_SLUG = 'ACT_GET_POST_DETAIL_BY_SLUG';
 export const ACT_GET_LIST_SEARCH_PAGE = 'ACT_GET_LIST_SEARCH_PAGE';
 
+export const ACT_FETCH_ARTICLES_PAGING = 'ACT_FETCH_ARTICLES_PAGING';
+
 // REDUX ACTION CREATOR
 export function actGetListArticleLatest(posts) {
 	return {
@@ -53,6 +55,19 @@ export function actGetListArticleGeneral(posts, currentPage, totalPage) {
 			currentPage,
 			totalPage
 		  },
+	}
+  }
+
+  // ==== Custom Hook==============
+
+  const actFetchArticlesPaging = ({posts, currentPage, totalPage}) => {
+	return {
+		type: ACT_FETCH_ARTICLES_PAGING,
+		payload: {
+			posts,
+			currentPage,
+			totalPage,
+		}
 	}
   }
 
@@ -110,10 +125,25 @@ export function actGetSearchPageAsync(queryStrURI, page = 1){
 	}
 }
 
+
+// ==== Custom Hook==============
+export function actFetchArticlesPagingAsync ( { page = 1, inputParams = {} } = {}){
+	return async (dispatch) => {
+		try{
+			const response = await postService.getPaging({page, inputParams})
+			const totalPage = parseInt(response.headers['x-wp-totalpages']);
+			const posts = response.data.map(mappingPostData);
+			dispatch(actFetchArticlesPaging({posts, currentPage: page, totalPage}))
+		}
+		catch(error){
+
+		}
+	}
+}
+
 export function actGetListRelatedPostByAuthorAsync(authorId){
 	return async (dispatch) => {
 		const response = await postService.getListRelatedPost(authorId);
 		const data = response.data
-
 	}
 }

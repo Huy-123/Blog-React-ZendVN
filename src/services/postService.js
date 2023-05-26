@@ -49,6 +49,9 @@ const postService = {
 	getListRelatedPost: function(authorId){
 		return this.getAll({per_page: 3, page: 1, author: authorId})
 	},
+	getPaging: function({page = 1, inputParams = {}} = {}){
+		return this.getAll({per_page: 1, page, ...inputParams} )
+	}
 
 }
 
