@@ -2,11 +2,11 @@
 
 import FuzzyHighlighter, { Highlighter } from 'react-fuzzy-highlighter';
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 export default function ArticleItemTitle({ title = false, slug }) {
+
   return (
- 
       <h2 className="article-item__title">
         {title ? (
              <NavLink to={`/post/:${slug}`} >

@@ -13,20 +13,22 @@ function PostDetailPage() {
   const dispatch = useDispatch();
   const [waitLoading, setWaitLoading] = useState(false);
 
-  let data = useSelector((state) => state.POST.listPostDetailBySlug)[0];
+  let data = useSelector((state) => state.POST.PostDetailBySlug); 
 
-  console.log('data1:', data); 
-
+  const {authorId, id} = data
+  
   useEffect(() => {
-    console.log('data2: ', data);
-    console.log('test');
+    // console.log('data2: ', data);
+    // console.log('test');
     dispatch(actGetPostDetailBySlugAsync(slug)).then(() => {
       setWaitLoading(true);
+      dispatch(actGetListRelatedPostByAuthorAsync({authorId: authorId, id: id}))
     });
-    if(data){
-      dispatch(actGetListRelatedPostByAuthorAsync(data.authorId))
-    }
-  }, []);
+    // if(data){
+    //   dispatch(actGetListRelatedPostByAuthorAsync({authorId: authorId, id: id}))
+    // }
+    // dispatch(actGetListRelatedPostByAuthorAsync(data.authorId))
+  }, [slug]);
 
 
   if (waitLoading === false) {

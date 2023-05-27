@@ -12,9 +12,11 @@ import {
 import Loading from "./../components/Loading/index";
 import "./style/style.css";
 import { actFetchAllMenusAsync } from "../store/menu/actions";
+import { useHistory } from "react-router-dom";
 
 function HomePage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showLoading, setshowLoading] = useState(true);
   const [buttonLoading, setButtonLoading] = useState(true)
 
@@ -38,6 +40,9 @@ function HomePage() {
     
     // dispatch(actGetListArticleGeneralAsync())
     dispatch(actFetchArticlesPagingAsync())
+    if(localStorage.getItem('ACCESS_TOKEN') === null){
+      history.push('/login')
+    }
     setshowLoading(false);
   }, []);
   return showLoading === true ? (

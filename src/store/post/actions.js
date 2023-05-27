@@ -7,6 +7,7 @@ export const ACT_GET_LIST_ARTICLE_POPULAR = 'ACT_GET_LIST_ARTICLE_POPULAR';
 export const ACT_GET_LIST_ARTICLE_GENERAL = 'ACT_GET_LIST_ARTICLE_GENERAL';
 export const ACT_GET_POST_DETAIL_BY_SLUG = 'ACT_GET_POST_DETAIL_BY_SLUG';
 export const ACT_GET_LIST_SEARCH_PAGE = 'ACT_GET_LIST_SEARCH_PAGE';
+export const ACT_GET_POST_RELATED_BY_AUTHOR = 'ACT_GET_POST_RELATED_BY_AUTHOR';
 
 export const ACT_FETCH_ARTICLES_PAGING = 'ACT_FETCH_ARTICLES_PAGING';
 
@@ -58,7 +59,7 @@ export function actGetListArticleGeneral(posts, currentPage, totalPage) {
 	}
   }
 
-  // ==== Custom Hook==============
+  // ==== Custom Hook=========================================================
 
   const actFetchArticlesPaging = ({posts, currentPage, totalPage}) => {
 	return {
@@ -67,6 +68,17 @@ export function actGetListArticleGeneral(posts, currentPage, totalPage) {
 			posts,
 			currentPage,
 			totalPage,
+		}
+	}
+  }
+
+//============================================================================
+
+export function actGetListRelatedPostByAuthor(posts){
+	return {
+		type: ACT_GET_POST_RELATED_BY_AUTHOR,
+		payload: {
+			posts
 		}
 	}
   }
@@ -126,7 +138,7 @@ export function actGetSearchPageAsync(queryStrURI, page = 1){
 }
 
 
-// ==== Custom Hook==============
+// ==== Custom Hook================================================
 export function actFetchArticlesPagingAsync ( { page = 1, inputParams = {} } = {}){
 	return async (dispatch) => {
 		try{
@@ -141,9 +153,12 @@ export function actFetchArticlesPagingAsync ( { page = 1, inputParams = {} } = {
 	}
 }
 
-export function actGetListRelatedPostByAuthorAsync(authorId){
+// =================================================================
+
+export function actGetListRelatedPostByAuthorAsync({authorId, id}){
 	return async (dispatch) => {
-		const response = await postService.getListRelatedPost(authorId);
-		const data = response.data
+		const response = await postService.getListRelatedPost({authorId, id});
+		const posts = response.data.map(mappingPostData);
+		dispatch(actGetListRelatedPostByAuthor(posts));
 	}
 }

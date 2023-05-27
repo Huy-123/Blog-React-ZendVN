@@ -4,7 +4,8 @@ import {
   ACT_GET_LIST_ARTICLE_POPULAR,
   ACT_GET_POST_DETAIL_BY_SLUG,
   ACT_GET_LIST_SEARCH_PAGE,
-  ACT_FETCH_ARTICLES_PAGING
+  ACT_FETCH_ARTICLES_PAGING,
+  ACT_GET_POST_RELATED_BY_AUTHOR
 } from "./actions";
 
 const initState = {
@@ -15,11 +16,14 @@ const initState = {
     currentPage: 1,
     totalPage: 0
   },
-  listPostDetailBySlug: [],
+  PostDetailBySlug: {},
   listSearchPage: {
     list: [],
     currentPage: 1,
     totalPage: 1
+  },
+  listRelatedPost: {
+    list: []
   },
   // Custom Hook
   listPostsPaging: {
@@ -53,7 +57,7 @@ function reducer(state = initState, action) {
     case ACT_GET_POST_DETAIL_BY_SLUG:
       return {
         ...state,
-        listPostDetailBySlug: [action.payload.posts],
+        PostDetailBySlug: action.payload.posts,
       };
     case ACT_GET_LIST_SEARCH_PAGE:
       return {
@@ -62,6 +66,13 @@ function reducer(state = initState, action) {
           currentPage: action.payload.currentPage,
           totalPage: action.payload.totalPage,
           list: action.payload.currentPage === 1 ? action.payload.posts : [...state.listSearchPage.list, ...action.payload.posts]
+        }
+      }
+    case ACT_GET_POST_RELATED_BY_AUTHOR:
+      return {
+        ...state,
+        listRelatedPost: {...state.listRelatedPost,
+          list: [...action.payload.posts]
         }
       }
       case ACT_FETCH_ARTICLES_PAGING:

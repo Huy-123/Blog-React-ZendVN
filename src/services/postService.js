@@ -46,8 +46,8 @@ const postService = {
 	getListSearchPage: function(queryStrURI, page = 1){
 		return this.getAll({per_page: 1, page: page, search: queryStrURI})
 	},
-	getListRelatedPost: function(authorId){
-		return this.getAll({per_page: 3, page: 1, author: authorId})
+	getListRelatedPost: function({authorId, id}){
+		return this.getAll({per_page: 3, page: 1, author: authorId, exclude: id})
 	},
 	getPaging: function({page = 1, inputParams = {}} = {}){
 		return this.getAll({per_page: 1, page, ...inputParams} )

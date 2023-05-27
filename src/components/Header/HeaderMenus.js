@@ -53,6 +53,13 @@ function HeaderMenus() {
           </li>
           <li>
             {!currentUser && (
+              <Link to="/register" >
+                <i className="icons ion-person" /> Dang ky
+              </Link>
+            )}
+          </li>
+          <li>
+            {!currentUser && (
               <Link to="/login" >
                 <i className="icons ion-person" /> Dang nhap
               </Link>
