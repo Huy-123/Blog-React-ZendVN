@@ -18,7 +18,6 @@ function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [showLoading, setshowLoading] = useState(true);
-  const [buttonLoading, setButtonLoading] = useState(true)
 
 
   // Loading
@@ -29,6 +28,8 @@ function HomePage() {
   useEffect(() => {
     dispatch(actGetListArticleLatestAsync());
     dispatch(actGetListArticlePopularAsync());
+
+    // CustomHook
     // dispatch(actGetListArticleGeneralAsync(perPage)).then((res) => {
     //   const keys = Object.values(res.headers);
     //   const totalPage = keys[1]
@@ -39,6 +40,7 @@ function HomePage() {
     // });
     
     // dispatch(actGetListArticleGeneralAsync())
+    
     dispatch(actFetchArticlesPagingAsync())
     if(localStorage.getItem('ACCESS_TOKEN') === null){
       history.push('/login')

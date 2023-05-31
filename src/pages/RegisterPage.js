@@ -52,7 +52,10 @@ function RegisterPage() {
     })
   }
 
-  // console.log(formData);
+  if(localStorage.getItem('ACCESS_TOKEN')){
+    history.push('/')
+  }
+
   return (
     <main className="login">
       <div className="spacing" />

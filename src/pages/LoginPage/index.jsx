@@ -10,8 +10,6 @@ function LoginPage() {
 
   const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.USER.token);
-
   const history = useHistory();
 
   const [formData, setFormData] = useState({
@@ -38,6 +36,10 @@ function LoginPage() {
         alert(res.error)
       }
     })
+  }
+
+  if(localStorage.getItem('ACCESS_TOKEN')){
+    history.push('/')
   }
 
   return (
