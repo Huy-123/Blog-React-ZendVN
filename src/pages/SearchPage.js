@@ -76,33 +76,10 @@ function SearchPage() {
     <div className="articles-list section">
       <div className="tcl-container">
         <MainTitle type="search">
-          {totalPage} kết quả tìm kiếm với từ khóa "{queryStr}"
+          {totalPage} kết quả tìm kiếm với từ khóa "<span className="search-highlight">{queryStr}</span>"
+          {/* {totalPage} kết quả tìm kiếm với từ khóa "{queryStr}" */}
         </MainTitle>
         <div className="tcl-row tcl-jc-center">
-          {/* <div className="tcl-col-12 tcl-col-md-8">
-            <ArticleItem 
-              isStyleCard 
-              isShowCategoies 
-              isShowAvatar={false} 
-              isShowDesc={false} 
-            />
-          </div>
-          <div className="tcl-col-12 tcl-col-md-8">
-            <ArticleItem 
-              isStyleCard 
-              isShowCategoies 
-              isShowAvatar={false} 
-              isShowDesc={false} 
-            />
-          </div> */}
-          <div className="tcl-col-12 tcl-col-md-8">
-            <ArticleItem
-              isStyleCard
-              isShowCategoies
-              isShowAvatar={false}
-              isShowDesc={false}
-            />
-          </div>
 
           {posts.map((listSearch) => {
             return (
@@ -113,6 +90,7 @@ function SearchPage() {
                     isShowAvatar
                     isStyleCard
                     data={listSearch}
+                    queryStr = {queryStr}
                   />
                 </div>
 

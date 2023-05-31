@@ -14,6 +14,7 @@ export default function ArticleItem({
   isShowCategoies = false,
   isShowAvatar = false,
   categories = [],
+  queryStr = false,
 
   data = false,
 }) {
@@ -35,7 +36,7 @@ export default function ArticleItem({
           {isShowCategoies && <ArticleItemCategories categoryIds = {categoryIds}/>}
           {isShowCategoies && <ArticleItemStats />}
 
-          <ArticleItemTitle title={title} slug={slug} />
+          <ArticleItemTitle title={title} slug={slug} queryStr = {queryStr}/>
 
           {isShowDesc && des ? (
             <ArticleItemDesc des={des} />

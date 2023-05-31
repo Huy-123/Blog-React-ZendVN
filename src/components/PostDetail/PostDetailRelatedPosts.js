@@ -1,10 +1,8 @@
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
 import ArticleRelated from "../ArticleItem/ArticleRelated"
 
 function PostDetailRelatedPosts() {
-
-  const {list: posts} = useSelector((state) => state.POST.listRelatedPost);
-
+  const {list: listRelatedPost} = useSelector((state) => state.POST.listRelatedPost);
 
   return (
     <div className="related-post">
@@ -12,12 +10,11 @@ function PostDetailRelatedPosts() {
       {/* <ArticleRelated />
       <ArticleRelated />
       <ArticleRelated /> */}
-      {posts.map((item, index) => {
-        const {title, authorData, date, slug} = item;
-        return (
-          <ArticleRelated key={index} title = {title} authorData = {authorData} date = {date} slug = {slug}/>
+      { listRelatedPost.map((item) => {
+        return(
+          <ArticleRelated key={item.id} {...item}/>
         )
-      })}
+      }) }
     </div>
   )
 }

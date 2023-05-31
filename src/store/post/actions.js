@@ -124,7 +124,10 @@ export function actGetPostDetailBySlugAsync(slug){
 	return async (dispatch) => {
 		const response = await postService.getPostDetailBySlug(slug);
 		const posts = response.data.map(mappingPostData);
+		const responseRelated = await postService.getListRelatedPost({authorId: posts[0].authorId, id:posts[0].id});
+		const postsRelated = responseRelated.data.map(mappingPostData);
 		 dispatch(actGetPostDetailBySlug(posts[0]))
+		dispatch(actGetListRelatedPostByAuthor(postsRelated));
 	}
 }
 
@@ -150,15 +153,5 @@ export function actFetchArticlesPagingAsync ( { page = 1, inputParams = {} } = {
 		catch(error){
 
 		}
-	}
-}
-
-// =================================================================
-
-export function actGetListRelatedPostByAuthorAsync({authorId, id}){
-	return async (dispatch) => {
-		const response = await postService.getListRelatedPost({authorId, id});
-		const posts = response.data.map(mappingPostData);
-		dispatch(actGetListRelatedPostByAuthor(posts));
 	}
 }
