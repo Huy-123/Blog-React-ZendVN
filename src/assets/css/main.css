@@ -109,3 +109,15 @@ body {
   -webkit-box-orient: vertical;  
   overflow: hidden;
     }
+
+  .load-more-comment{
+    color: #007bff;
+    cursor: pointer;
+  }
+  .load-more-comment i{
+    display: inline-block;
+    transform: rotate(200deg);
+  }
+  .load-more-comment:hover{
+    color: #0056b3
+  }
