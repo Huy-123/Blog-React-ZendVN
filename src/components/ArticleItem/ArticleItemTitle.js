@@ -20,25 +20,27 @@ export default function ArticleItemTitle({ title = false, slug, queryStr }) {
       </h2>
   );
   }else{
-    const startHighlightPostion = (title.toLowerCase()).search((queryStr.toLowerCase())) + 1;
-    const endHighlightPostion = (startHighlightPostion + queryStr.length) - 1 ;
+    // const startHighlightPostion = (title.toLowerCase()).search((queryStr.toLowerCase())) + 1;
+    // const endHighlightPostion = (startHighlightPostion + queryStr.length) - 1 ;
 
-    const firtParagraph = title.slice(0, (startHighlightPostion -1))
-    const lastParagraph = title.slice((endHighlightPostion), title.length + 1 )
-    let midleParagraph = `<span class="search-highlight">${(title.slice((startHighlightPostion - 1), (endHighlightPostion) ))}</span>`
+    // const firtParagraph = title.slice(0, (startHighlightPostion -1))
+    // const lastParagraph = title.slice((endHighlightPostion), title.length + 1 )
+    // let midleParagraph = `<span class="search-highlight">${(title.slice((startHighlightPostion - 1), (endHighlightPostion) ))}</span>`
 
-    let titleHighlight = firtParagraph.concat(midleParagraph);
-    titleHighlight = titleHighlight.concat(lastParagraph);
-    titleHighlight = `<h2>${titleHighlight}</h2>`;
+    // let titleHighlight = firtParagraph.concat(midleParagraph);
+    // titleHighlight = titleHighlight.concat(lastParagraph);
+    // titleHighlight = `<h2>${titleHighlight}</h2>`;
+
+    const highlightSearch = (title) => {
+      const regex = new RegExp(`(${queryStr})`, "gi");
+      return title.replace(regex,`<mark>$1</mark>`)
+    }
 
     return (
       <h2 className="article-item__title">
         {title ? (
-            //  <NavLink to={`/post/:${slug}`} >
-            //   {title}
-            //  </NavLink>
              <NavLink to={`/post/:${slug}`} >
-              <div dangerouslySetInnerHTML={{ __html:titleHighlight}}></div>
+              <div dangerouslySetInnerHTML={{ __html:highlightSearch(title)}}></div>
              </NavLink>
         ) : (
           <a href="/only-someone-who's-seen-the-mummy-will-pass-this/">
@@ -48,7 +50,5 @@ export default function ArticleItemTitle({ title = false, slug, queryStr }) {
       </h2>
   );
   }
-  
-  // console.log('test highlight: ', (title.toLowerCase()).search((queryStr.toLowerCase())) );
   
 }

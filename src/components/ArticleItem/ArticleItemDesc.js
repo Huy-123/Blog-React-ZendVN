@@ -1,13 +1,16 @@
 import { Markup } from 'interweave';
-export default function ArticleItemDesc({ des = false }) {
+export default function ArticleItemDesc({ des = false, queryStr }) {
   let content = des.replace('<p>', '');
   content = content.replace("</p>", '');
+
+  const highlightSearch = (content) => {
+    const regex = new RegExp(`(${queryStr})`, "gi");
+    return content.replace(regex,`<mark>$1</mark>`)
+  }
   return (
     <>
       {des ? (
-        // <div>ReactHtmlParser(content)</div>
-        // <Markup content={des} />
-        <p className = "des">{content}</p>
+        <p className = "des" dangerouslySetInnerHTML={{ __html:highlightSearch(highlightSearch(content))}}></p>
       ) : (
         <p className="article-item__desc">
           Markdown is a lightweight markup language with plain-text-formatting

@@ -39,7 +39,7 @@ export default function ArticleItem({
           <ArticleItemTitle title={title} slug={slug} queryStr = {queryStr}/>
 
           {isShowDesc && des ? (
-            <ArticleItemDesc des={des} />
+            <ArticleItemDesc des={des} queryStr = {queryStr} />
           ) : isShowDesc ? (
             <ArticleItemDesc />
           ) : (
