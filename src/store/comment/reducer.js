@@ -29,19 +29,25 @@ function reducer(state = initState, action) {
       };
     case ACT_FETCH_COMMENTS_CHILD:
       const parent = action.payload.parent;
-      const hasData = state.dataChildComment[parent];
+      // const hasData = state.dataChildComment[parent];
+
+      const isFristPage = action.payload.currentPage === 1;
+
       return {
         ...state,
         dataChildComment: {
           ...state.dataChildComment,
-          [parent]: hasData
-            ? {}
-            : {
-                list: action.payload.list,
-                currentPage: action.payload.currentPage,
-                totalPages: action.payload.totalPages,
-                total: action.payload.total,
-              },
+          [parent]: {
+            list: isFristPage
+              ? action.payload.list
+              : [
+                  ...state.dataChildComment[parent].list,
+                  ...action.payload.list,
+                ],
+            currentPage: action.payload.currentPage,
+            totalPages: action.payload.totalPages,
+            total: action.payload.total,
+          },
         },
       };
     default:
