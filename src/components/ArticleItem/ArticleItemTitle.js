@@ -1,10 +1,9 @@
 // import { Link } from 'react-router-dom';
 
-import FuzzyHighlighter, { Highlighter } from 'react-fuzzy-highlighter';
-
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function ArticleItemTitle({ title = false, slug, queryStr }) {
+
   if(!queryStr){
     return (
       <h2 className="article-item__title">

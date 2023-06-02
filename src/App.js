@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { actFetchAllMenusAsync } from "./store/menu/actions";
 import { actFetchAllCategoriesAsync } from "./store/category/actions";
 import { actFetchMeAsync } from "./store/user/actions";
+import CategoryPage from "./pages/CategoryPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ function App() {
         <Switch>
           <Route path="/post/:slug">
             <PostDetailPage />
+          </Route>
+          <Route path="/category/:slug">
+            <CategoryPage/>
           </Route>
           <Route path="/search">
             <SearchPage />
