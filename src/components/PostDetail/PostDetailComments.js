@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./comments.css";
 import { useDispatch, useSelector } from "react-redux";
 import { actFetchCommentAsync } from "../../store/comment/actions";
@@ -6,12 +6,12 @@ import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import CommentAction from "./CommentAction";
 
-function PostDetailComments({ id }) {
+function PostDetailComments({ id, authorId }) {
   const {
     list,
     currentPage,
     total,
-    totalPages,
+    // totalPages,
   } = useSelector((state) => state.COMMENT.dataParentComment);
 
   const restTotal = total - list.length;
@@ -20,12 +20,14 @@ function PostDetailComments({ id }) {
 
   const dispatch = useDispatch();
 
+ 
+
   useEffect(() => {
     dispatch(actFetchCommentAsync({ postId, parent: 0, currentPage: 1 }));
   }, [postId]);
   return (
     <div className="post-detail__comments">
-      <CommentForm />
+      <CommentForm postId = {postId} authorId = {authorId} />
 
       <p>20 Comments</p>
       {list.length > 0 && (

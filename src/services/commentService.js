@@ -10,7 +10,10 @@ const commentService = {
         		per_page: 3
 			}
 		})
-	}
+	},
+	postNewComment: function (data){
+		return API.callWithToken().post('/wp/v2/comments', data)
+	},
 }
 
 export default commentService;

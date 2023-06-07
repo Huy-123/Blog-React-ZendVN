@@ -4,7 +4,7 @@ import PostDetailRichText from "./PostDetailRichText"
 import PostDetailTags from "./PostDetailTags"
 
 function PostDetailContent({data}) {
-  const {img, content, id} = data;
+  const {img, content, id, authorId} = data;
   return (
     <div className="post-detail__content">
       <div className="thumbnail">
@@ -15,7 +15,7 @@ function PostDetailContent({data}) {
 
         <PostDetailTags />
         
-        <PostDetailComments id = {id}/>
+        <PostDetailComments id = {id} authorId = {authorId}/>
       </div>
     </div>
   )

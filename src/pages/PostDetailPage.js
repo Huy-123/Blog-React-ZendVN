@@ -3,7 +3,7 @@ import PostDetailContent from "../components/PostDetail/PostDetailContent";
 import PostDetailHead from "../components/PostDetail/PostDetailHead";
 import PostDetailSidebar from "../components/PostDetail/PostDetailSidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { actGetListRelatedPostByAuthorAsync, actGetPostDetailBySlugAsync } from "../store/post/actions";
+import { actGetPostDetailBySlugAsync } from "../store/post/actions";
 import { useEffect, useState } from "react";
 import Loading from "./../components/Loading/index";
 
@@ -14,13 +14,12 @@ function PostDetailPage() {
   const [waitLoading, setWaitLoading] = useState(false);
 
   const data = useSelector((state) => state.POST.PostDetailBySlug);
-  
+
   useEffect(() => {
     dispatch(actGetPostDetailBySlugAsync(slug)).then(() => {
       setWaitLoading(true);
     });
   }, [slug]);
-
 
   if (waitLoading === false) {
     return (

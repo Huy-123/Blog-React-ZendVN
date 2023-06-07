@@ -8,7 +8,7 @@ export default function ArticleItemTitle({ title = false, slug, queryStr }) {
     return (
       <h2 className="article-item__title">
         {title ? (
-             <NavLink to={`/post/:${slug}`} >
+             <NavLink to={`/post/${slug}`} >
               {title}
              </NavLink>
         ) : (
@@ -38,7 +38,7 @@ export default function ArticleItemTitle({ title = false, slug, queryStr }) {
     return (
       <h2 className="article-item__title">
         {title ? (
-             <NavLink to={`/post/:${slug}`} >
+             <NavLink to={`/post/${slug}`} >
               <div dangerouslySetInnerHTML={{ __html:highlightSearch(title)}}></div>
              </NavLink>
         ) : (

@@ -31,6 +31,7 @@ export function actLoginAsync(data) {
 		// lấy thông tin user vừa đăng nhập
 		const token = response.data.token;
 
+
 		dispatch(actFetchMeAsync(token))
 		return {	
 		  ok: true,
@@ -56,7 +57,9 @@ export function actLoginAsync(data) {
 			}
 			const responseMe = await userService.fetchMe();
 
-			const currentUser = responseMe.data
+			const currentUser = responseMe.data;
+
+
 
 			dispatch(actLogin(token, currentUser))
 
