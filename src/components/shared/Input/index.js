@@ -45,7 +45,8 @@ function Input({
 
   return (
     <div className="form-control">
-      { label && <label>{ label }</label> }
+      {/* { label && <label>{ label }</label> } */}
+      { label && <h1>{ label }</h1> }
       { type === 'password' && (
         <i className={classesIconPwd} onClick={handleToggleShowPwd}></i>
       ) }
