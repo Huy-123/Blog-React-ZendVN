@@ -121,3 +121,17 @@ body {
   .load-more-comment:hover{
     color: #0056b3
   }
+
+  .title-password{
+    font-weight: bold;
+    font-size:20px;
+    color: rgb(165 125 125);
+  }
+
+  /* .form-control h1 {
+    text-align: center
+  } */
+  .form-control label {
+    margin-bottom: 0px;
+  }
+

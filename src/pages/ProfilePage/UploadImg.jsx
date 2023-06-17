@@ -1,9 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actUpdateProfileAvatarAsync,
-} from "../../store/profile/actions";
+import { actUpdateProfileAvatarAsync } from "../../store/profile/actions";
 import Button from "../../components/shared/Button";
 
 function UploadImg({ label, des }) {
@@ -37,13 +35,14 @@ function UploadImg({ label, des }) {
   };
 
   return (
-    <div>
+    <div className="form-control">
       <h1>Change Image</h1>
       <div className="center">
         <div className="form-input">
           <div className="preview">
             <img id="file-ip-1-preview" src={previewImage} />
           </div>
+          <br />
           <label htmlFor="file-ip-1">Change Image</label>
           <input type="file" id="file-ip-1" onChange={onFileChange} />
         </div>

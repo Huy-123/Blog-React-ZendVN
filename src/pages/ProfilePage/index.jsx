@@ -2,6 +2,7 @@ import "./login.css";
 import Input from "../../components/shared/Input";
 import { useState } from "react";
 import UploadImg from "./UploadImg";
+import ChangePassword from "./ChangePassword";
 
 
 function ProfilePage() {
@@ -21,7 +22,8 @@ function ProfilePage() {
             <h1 className="form-title text-center">Profile</h1>
             <div className="form-login-register">
               <form autoComplete="off">
-                <Input
+                <ChangePassword/>
+                <Input 
                   label="Change Description"
                   placeholder="Nhập description ..."
                   autoComplete="off"
