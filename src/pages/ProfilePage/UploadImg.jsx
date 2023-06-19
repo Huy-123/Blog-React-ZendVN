@@ -4,12 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { actUpdateProfileAvatarAsync } from "../../store/profile/actions";
 import Button from "../../components/shared/Button";
 
+
 function UploadImg({ label, des }) {
   const user = useSelector((state) => state.USER);
 
-  const imgUser = user?.currentUser?.avatar_urls[96];
+  const imgUser = user?.currentUser?.simple_local_avatar?.full;
 
+  // useState
   const [previewImage, setPreviewImage] = useState(imgUser);
+  const [loading, setLoading] = useState(false);
+  const [showNoti, setShowNoti] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -30,8 +34,13 @@ function UploadImg({ label, des }) {
     let formData = new FormData();
 
     formData.append("file", image.selectedFiled, image.selectedFiled.name);
-
-    dispatch(actUpdateProfileAvatarAsync(formData, des));
+    setLoading(true);
+    dispatch(actUpdateProfileAvatarAsync(formData, des)).then((res) => {
+      if (res.ok) {
+        setLoading(false);
+        setShowNoti(true)
+      }
+    });
   };
 
   return (
@@ -48,9 +57,18 @@ function UploadImg({ label, des }) {
         </div>
       </div>
       <br />
-      <Button size="large" type="primary" onClick={(e) => onFileUpload(e)}>
-        Save
-      </Button>
+      <div className="save-succes">
+        <Button
+          type="primary"
+          size="large"
+          loading={loading}
+          loadingPos="right"
+          onClick={(e) => onFileUpload(e)}
+        >
+          Save
+        </Button>
+        {showNoti ? <p className="success-noti">Successfull</p> : <></>}
+      </div>
     </div>
   );
 }

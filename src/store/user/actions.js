@@ -86,7 +86,7 @@ export function actChangePasswordAsync(data) {
     try {
       const response = await userService.changePassword(data);
       console.log("response: ", response);
-      alert("Change Password Success");
+      // alert("Change Password Success");
       return {
         ok: true,
         status: response.data.status,

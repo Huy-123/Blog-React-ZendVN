@@ -4,13 +4,13 @@ import { Link, useHistory } from "react-router-dom";
 import { actLogout } from "../../store/user/actions";
 
 function HeaderMenus() {
-  const {menus} = useSelector((state) => state.MENU);
+  const { menus } = useSelector((state) => state.MENU);
 
-  const {token, currentUser} = useSelector((state) => state.USER);
+  const { token, currentUser } = useSelector((state) => state.USER);
 
   const history = useHistory();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // Render Memu
 
@@ -22,12 +22,14 @@ function HeaderMenus() {
       </li>
     ));
   }
-  
+
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(actLogout())
+    dispatch(actLogout());
     history.push("/login");
   };
+
+  // console.log("currentUser: ", currentUser);
 
   return (
     <div className="tcl-col-6">
@@ -37,7 +39,11 @@ function HeaderMenus() {
           <li className="user">
             {currentUser && (
               <Link to="/login">
-                <i className="icons ion-person" /> {currentUser.name}
+                <div style={{ display: "flex" }}>
+                  {/* <img className="img-avatar" src={currentUser?.simple_local_avatar?.full}></img> */}
+                  <img className="img-avatar" src={currentUser?.simple_local_avatar?.full}></img>
+                  <i className="icons ion-person" /> {currentUser.name}
+                </div>
               </Link>
             )}
             <ul>
@@ -53,14 +59,14 @@ function HeaderMenus() {
           </li>
           <li>
             {!currentUser && (
-              <Link to="/register" >
+              <Link to="/register">
                 <i className="icons ion-person" /> Dang ky
               </Link>
             )}
           </li>
           <li>
             {!currentUser && (
-              <Link to="/login" >
+              <Link to="/login">
                 <i className="icons ion-person" /> Dang nhap
               </Link>
             )}

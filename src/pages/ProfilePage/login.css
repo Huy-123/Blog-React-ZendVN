@@ -93,3 +93,24 @@
   border-radius:5px;
   cursor:pointer;
 }
+
+.save-succes{
+  display:flex;
+  align-items:center;
+}
+
+.success-noti{
+  color:#67cb1f;
+  margin-bottom: 0;
+  margin-left: 9px;
+  font-weight: bold;
+  font-size:17px;
+}
+
+.fail-noti{
+  color:#f93a05;
+  margin-bottom: 0;
+  margin-left: 9px;
+  font-weight: bold;
+  font-size:17px;
+}

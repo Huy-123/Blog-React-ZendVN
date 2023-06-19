@@ -84,6 +84,7 @@ export function actFetchCommentAsync({
 }
 
 export function actPostNewCommentAsync(data) {
+  console.log("data: ", data);
   return async (dispatch) => {
     const response = await commentService.postNewComment(data);
     dispatch(actPostNewComment({ comment: response.data }));

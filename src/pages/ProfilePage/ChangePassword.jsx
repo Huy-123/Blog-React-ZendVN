@@ -6,6 +6,10 @@ import { useDispatch } from "react-redux";
 import { actChangePasswordAsync } from "../../store/user/actions";
 
 function ChangePassword(props) {
+  // useState
+  const [loading, setLoading] = useState(false);
+  const [showNoti, setShowNoti] = useState(false);
+
   const [formData, setFormData] = useState({
     password: "",
     new_password: "",
@@ -21,11 +25,19 @@ function ChangePassword(props) {
     setFormData({ ...formData, [name]: value });
   };
 
-  console.log("formData: ", formData);
-
   const handleSubmitChangePassword = (e) => {
     e.preventDefault();
-    dispatch(actChangePasswordAsync(formData));
+    setLoading(true);
+    dispatch(actChangePasswordAsync(formData)).then((res) => {
+      if (res.ok) {
+        setLoading(false);
+        setShowNoti("success");
+      } else if (res.ok === false) {
+        setLoading(false);
+        alert("Enter your password info. Please!");
+        setShowNoti("fail");
+      }
+    });
   };
 
   return (
@@ -55,13 +67,18 @@ function ChangePassword(props) {
         name="confirm_new_password"
         onChange={handleChangeValue}
       />
-      <Button
-        size="large"
-        type="primary"
-        onClick={(e) => handleSubmitChangePassword(e)}
-      >
-        Save
-      </Button>
+      <div className="save-succes">
+        <Button
+          type="primary"
+          size="large"
+          loading={loading}
+          loadingPos="right"
+          onClick={(e) => handleSubmitChangePassword(e)}
+        >
+          Save
+        </Button>
+        {showNoti === false ? <></>: showNoti === "success" ? <p className="success-noti">Successfull</p> : <p className="fail-noti">Your Password Invaid</p>}
+      </div>
     </div>
   );
 }

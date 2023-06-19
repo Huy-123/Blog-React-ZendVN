@@ -107,3 +107,10 @@
         -webkit-justify-content: flex-end;
         -ms-flex-pack: end;
         justify-content: flex-end; } }
+
+.img-avatar {
+  height: 28px;
+  border-radius: 21%;
+  width: 28px;
+  margin-right: 4px;
+}

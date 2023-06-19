@@ -28,8 +28,7 @@ export function actUpdateProfileAvatarAsync(data, des) {
 
       const response = await uploadProfileService.updateProfileAvatar(dataUpdateProfile);
 
-      console.log("res: ", response);
-
+      // console.log("res: ", response);
       return {
         ok: true,
       };

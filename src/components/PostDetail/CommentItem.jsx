@@ -9,7 +9,7 @@ function CommentItem({ data }) {
     (state) => state.COMMENT.dataChildComment
   );
 
-  console.log("dataChildComment: ", dataChildComment);
+  // console.log("dataChildComment: ", dataChildComment);
 
   const currentDataChildComment = dataChildComment[data.id];
 
