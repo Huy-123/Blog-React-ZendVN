@@ -6,17 +6,18 @@ function CommentAction({ restTotal, parent, currentPage }) {
   const dispatch = useDispatch();
 
   const {id} = useSelector((state) => state.POST.PostDetailBySlug
-  );
+  ); // id is postID
+
+  const dataParentComment = useSelector((state) => (state.COMMENT.dataParentComment));
 
   const handleLoadMore = (e) => {
     e.preventDefault();
     dispatch(
-      actFetchCommentAsync({ postId: id, currentPage: currentPage + 1, parent })
+      actFetchCommentAsync({ postId: id, currentPage: currentPage + 1, parent, exclude: (dataParentComment.exclude).join(',')})
     );
   };
 
   
-
 if(parent === 0){
   return (
     <div >

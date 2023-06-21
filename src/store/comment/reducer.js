@@ -1,6 +1,9 @@
-import { ACT_FETCH_COMMENTS_PARENT } from "./actions";
+import {
+  ACT_FETCH_COMMENTS_PARENT,
+  ACT_POST_CHILD_COMMENT,
+  ACT_POST_PARENT_COMMENT,
+} from "./actions";
 import { ACT_FETCH_COMMENTS_CHILD } from "./actions";
-import { ACT_POST_NEW_COMMNENT } from "./actions";
 
 const initState = {
   dataParentComment: {
@@ -8,6 +11,7 @@ const initState = {
     currentPage: 0,
     totalPages: 1,
     total: 1,
+    exclude: []
   },
   dataChildComment: {},
 };
@@ -30,7 +34,6 @@ function reducer(state = initState, action) {
       };
     case ACT_FETCH_COMMENTS_CHILD:
       const parent = action.payload.parent;
-      // const hasData = state.dataChildComment[parent];
 
       const isFristPage = action.payload.currentPage === 1;
 
@@ -48,42 +51,77 @@ function reducer(state = initState, action) {
             currentPage: action.payload.currentPage,
             totalPages: action.payload.totalPages,
             total: action.payload.total,
+            exclude: ''
           },
         },
       };
 
-    case ACT_POST_NEW_COMMNENT:
-      const parentChild = action.payload.parent;
-      console.log("action.payload: ", action.payload);
-      console.log(
-        "state.dataChildComment[parentChild]: ",
-        state.dataChildComment[parentChild]
-      );
+    // ============= Backup =============================
+    // case ACT_POST_NEW_COMMNENT:
+    //   const parentChild = action.payload.parent;
+    //   console.log("action.payload: ", action.payload);
+    //   console.log(
+    //     "state.dataChildComment[parentChild]: ",
+    //     state.dataChildComment[parentChild]
+    //   );
+    //   return {
+    //     ...state,
+    //     dataParentComment:
+    //       parentChild === 0
+    //         ? {
+    //             ...state.dataParentComment,
+    //             list: [action.payload, ...state.dataParentComment.list],
+    //             total: state.dataParentComment.total + 1,
+    //           }
+    //         : { ...state.dataParentComment },
+    //     dataChildComment:
+    //       parentChild !== 0 && state.dataChildComment
+    //         ? {
+    //             [parentChild]: {
+    //               ...state.dataChildComment[parentChild],
+    //               list: [
+    //                 action.payload,
+    //                 ...state.dataChildComment[parentChild].list,
+    //               ],
+    //             },
+    //             ...state.dataChildComment,
+    //           }
+    //         : {
+    //             ...state.dataChildComment,
+    //           },
+    //   };
+      
+    // ============= Backup =============================
+
+
+    case ACT_POST_PARENT_COMMENT:
       return {
         ...state,
-        dataParentComment:
-          parentChild === 0
-            ? {
-                ...state.dataParentComment,
-                list: [action.payload, ...state.dataParentComment.list],
-                total: state.dataParentComment.total + 1,
-              }
-            : { ...state.dataParentComment },
-        dataChildComment:
-          parentChild !== 0 && state.dataChildComment
-            ? {
-                [parentChild]: {
-                  ...state.dataChildComment[parentChild],
-                  list: [
-                    action.payload,...state.dataChildComment[parentChild].list,
-                  ],
-                },
-                ...state.dataChildComment,
-              }
-            : {
-                ...state.dataChildComment
-              },
+        dataParentComment: {
+          ...state.dataParentComment,
+          list: [action.payload, ...state.dataParentComment.list],
+          total: state.dataParentComment.total + 1,
+          exclude: [...state.dataParentComment.exclude, action.payload.id]
+        },
       };
+    case ACT_POST_CHILD_COMMENT:
+      const hasData = state.dataChildComment[action.payload.data.parent];
+
+      console.log("state.dataChildComment[action.payload.data.parent].total: ", state.dataChildComment);
+
+      return {
+        ...state,
+        dataChildComment: {
+          ...state.dataChildComment,
+          [action.payload.data.parent]: {
+            list: (hasData) ? [action.payload.data, ...state.dataChildComment[action.payload.data.parent].list] : [action.payload.data],
+            total: (hasData) ? (state.dataChildComment[action.payload.data.parent].total + 1) : (action.payload.firstTotal + 1) ,
+            totalPages: (hasData) ? state.dataChildComment[action.payload.data.parent].totalPages : '',
+            currentPage: (hasData) ? state.dataChildComment[action.payload.data.parent].currentPage : "",
+          }
+        } 
+      }
+
     default:
       return state;
   }

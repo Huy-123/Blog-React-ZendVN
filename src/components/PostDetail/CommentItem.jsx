@@ -9,9 +9,16 @@ function CommentItem({ data }) {
     (state) => state.COMMENT.dataChildComment
   );
 
+  // data is data of User
+
+  console.log("data ", data);
+  console.log("data.comment_reply_count: ", data.comment_reply_count);
+  console.log("dataChildComment: ", dataChildComment);
+
   // console.log("dataChildComment: ", dataChildComment);
 
   const currentDataChildComment = dataChildComment[data.id];
+
 
   const { list, currentPage, total } = currentDataChildComment || {
     list: [],
@@ -85,7 +92,7 @@ function CommentItem({ data }) {
           />
         )}
       </li>
-      {showForm && <CommentForm handleShowForm = {handleShowForm} parentComment={data.id} postId = {data.post} authorId = {data.author}/>}
+      {showForm && <CommentForm firstTotal = {data.comment_reply_count} handleShowForm = {handleShowForm} parentComment={data.id} postId = {data.post} authorId = {data.author}/>}
     </>
   );
 }

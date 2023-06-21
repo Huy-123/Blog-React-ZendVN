@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actUpdateProfileAvatarAsync } from "../../store/profile/actions";
@@ -7,13 +7,20 @@ import Button from "../../components/shared/Button";
 
 function UploadImg({ label, des }) {
   const user = useSelector((state) => state.USER);
+  console.log(user.currentUser);
 
   const imgUser = user?.currentUser?.simple_local_avatar?.full;
+
+  console.log("imgUser: ", imgUser);
 
   // useState
   const [previewImage, setPreviewImage] = useState(imgUser);
   const [loading, setLoading] = useState(false);
   const [showNoti, setShowNoti] = useState(false);
+
+  useEffect(() => {
+    setPreviewImage(imgUser);
+  }, [imgUser])
 
   const dispatch = useDispatch();
 
@@ -22,6 +29,7 @@ function UploadImg({ label, des }) {
   });
 
   const onFileChange = (event) => {
+    console.log(event.target.files);
     if (event.target.files && event.target.files[0]) {
       setPreviewImage(URL.createObjectURL(event.target.files[0]));
     }
@@ -33,12 +41,14 @@ function UploadImg({ label, des }) {
     e.preventDefault();
     let formData = new FormData();
 
-    formData.append("file", image.selectedFiled, image.selectedFiled.name);
+    formData.append("file", image.selectedFiled);
+    console.log('formData', formData.getAll('file'));
     setLoading(true);
-    dispatch(actUpdateProfileAvatarAsync(formData, des)).then((res) => {
+    dispatch(actUpdateProfileAvatarAsync(formData, des, user?.currentUser?.simple_local_avatar?.media_id)).then((res) => {
       if (res.ok) {
         setLoading(false);
-        setShowNoti(true)
+        setShowNoti(true);
+        setImage({ selectedFiled: null });
       }
     });
   };

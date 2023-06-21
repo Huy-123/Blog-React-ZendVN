@@ -3,6 +3,14 @@ import userService from "../../services/userService";
 export const ACT_LOGIN = "ACT_LOGIN";
 export const ACT_LOGOUT = "ACT_LOGOUT";
 export const ACT_REGISTER = "ACT_REGISTER";
+export const ACT_UPDATE_CURRENT_USER = "ACT_UPDATE_CURRENT_USER";
+
+export function actUpdateCurrentUser(currentUser) {
+  return {
+    type: ACT_UPDATE_CURRENT_USER,
+    payload: currentUser
+  }
+}
 
 //Login
 export function actLogin(token, currentUser) {
