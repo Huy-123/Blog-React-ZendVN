@@ -107,8 +107,6 @@ function reducer(state = initState, action) {
     case ACT_POST_CHILD_COMMENT:
       const hasData = state.dataChildComment[action.payload.data.parent];
 
-      console.log("state.dataChildComment[action.payload.data.parent].total: ", state.dataChildComment);
-
       return {
         ...state,
         dataChildComment: {
@@ -116,8 +114,9 @@ function reducer(state = initState, action) {
           [action.payload.data.parent]: {
             list: (hasData) ? [action.payload.data, ...state.dataChildComment[action.payload.data.parent].list] : [action.payload.data],
             total: (hasData) ? (state.dataChildComment[action.payload.data.parent].total + 1) : (action.payload.firstTotal + 1) ,
-            totalPages: (hasData) ? state.dataChildComment[action.payload.data.parent].totalPages : '',
-            currentPage: (hasData) ? state.dataChildComment[action.payload.data.parent].currentPage : "",
+            totalPages: (hasData) && state.dataChildComment[action.payload.data.parent].totalPages ,
+            // currentPage: (!hasData) && 0 
+            // && state.dataChildComment[action.payload.data.parent].currentPage , 
           }
         } 
       }

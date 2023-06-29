@@ -14,11 +14,11 @@ function PostDetailComments({ id, authorId }) {
     // totalPages,
   } = useSelector((state) => state.COMMENT.dataParentComment);
 
-  console.log("list: ", list);
+  // console.log("list: ", list);
 
   const dataParentComment = useSelector((state) => (state.COMMENT.dataChildComment));
 
-  console.log("dataParentComment: ", dataParentComment);
+  // console.log("dataParentComment: ", dataParentComment);
 
 
   const restTotal = total - list.length;

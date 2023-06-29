@@ -11,13 +11,15 @@ function CommentItem({ data }) {
 
   // data is data of User
 
-  console.log("data ", data);
-  console.log("data.comment_reply_count: ", data.comment_reply_count);
-  console.log("dataChildComment: ", dataChildComment);
+  // console.log("data ", data);
+  // console.log("data.comment_reply_count: ", data.comment_reply_count);
+  // console.log("dataChildComment: ", dataChildComment);
 
   // console.log("dataChildComment: ", dataChildComment);
 
   const currentDataChildComment = dataChildComment[data.id];
+
+  // console.log("dataChildComment[data.id]: ", dataChildComment[data.id]);
 
 
   const { list, currentPage, total } = currentDataChildComment || {

@@ -3,7 +3,8 @@ import axios from "axios";
 const API = {
 	call: function(){
 		return axios.create({
-			baseURL: 'http://wp-api.test/wp-json',
+			// baseURL: 'http://wp-api.test/wp-json',
+			baseURL: 'https://bthxuan.azdigi.shop/wp-json',
 		  })
 	},
 	callWithToken: function(){
@@ -11,6 +12,7 @@ const API = {
 		// 	token = localStorage.getItem('ACCESS_TOKEN')
 		// }
 		return axios.create({
+			// baseURL: 'http://wp-api.test/wp-json',
 			baseURL: 'http://wp-api.test/wp-json',
 			headers: {
 			  Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
